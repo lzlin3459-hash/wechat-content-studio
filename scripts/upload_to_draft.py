@@ -23,6 +23,7 @@ import uuid
 
 TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token"
 MATERIAL_ADD_URL = "https://api.weixin.qq.com/cgi-bin/material/add_material"
+UPLOADIMG_URL = "https://api.weixin.qq.com/cgi-bin/media/uploadimg"
 DRAFT_ADD_URL = "https://api.weixin.qq.com/cgi-bin/draft/add"
 
 ERROR_HINTS = {
@@ -83,6 +84,7 @@ def main():
     parser.add_argument("--digest", required=True, help="摘要（不超过120字）")
     parser.add_argument("--content-html", required=True, help="正文 HTML 文件路径")
     parser.add_argument("--cover-image", required=True, help="封面图路径（jpg/png）")
+    parser.add_argument("--body-images-file", default="", help="正文图片映射JSON文件路径，如 img_map.json（可选）")
     parser.add_argument("--content-source-url", default="", help="原文链接（可选）")
     args = parser.parse_args()
 
@@ -107,13 +109,27 @@ def main():
     print(f"      ✓ 封面上传成功，thumb_media_id={thumb_media_id}")
 
     # 4. 读正文 HTML
-    print("[3/4] 读取正文 HTML ...")
+    print("[3/5] 读取正文 HTML ...")
     with open(args.content_html, "r", encoding="utf-8") as f:
         content_html = f.read()
     print(f"      ✓ 正文 {len(content_html)} 字符")
 
-    # 5. 写入草稿箱
-    print("[4/4] 写入草稿箱 ...")
+    # 5. 上传正文图片并替换占位符
+    if args.body_images_file:
+        print("[4/5] 上传正文图片并替换占位符 ...")
+        with open(args.body_images_file, "r", encoding="utf-8") as f:
+            img_map = json.load(f)
+        for placeholder, img_path in img_map.items():
+            img_resp = http_post_multipart(f"{UPLOADIMG_URL}?access_token={token}", img_path)
+            check_error(img_resp, f"上传正文图片 {placeholder}")
+            wx_url = img_resp["url"]
+            content_html = content_html.replace(placeholder, wx_url)
+            print(f"      ✓ {placeholder} → {wx_url[:50]}...")
+    else:
+        print("[4/5] 无正文图片，跳过")
+
+    # 6. 写入草稿箱
+    print("[5/5] 写入草稿箱 ...")
     article = {
         "title": args.title,
         "author": args.author,
