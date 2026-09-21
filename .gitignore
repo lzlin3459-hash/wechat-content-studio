@@ -3,6 +3,7 @@ config.json
 *.secret
 .env
 .env.*
+wx_cookies.json
 
 # 系统文件
 .DS_Store
