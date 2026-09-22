@@ -76,17 +76,42 @@ def check_error(resp, step):
         sys.exit(1)
 
 
+def get_my_public_ip():
+    """获取当前公网 IP"""
+    try:
+        resp = http_get_json("https://httpbin.org/ip")
+        return resp.get("origin", "未知")
+    except:
+        try:
+            resp = http_get_json("https://api.ipify.org?format=json")
+            return resp.get("ip", "未知")
+        except:
+            return "无法获取，请打开百度搜「我的IP」查看"
+
+
 def main():
     parser = argparse.ArgumentParser(description="上传图文到微信公众号草稿箱")
     parser.add_argument("--config", required=True, help="配置文件路径（含 appid/appsecret）")
-    parser.add_argument("--title", required=True, help="文章标题")
-    parser.add_argument("--author", required=True, help="作者")
-    parser.add_argument("--digest", required=True, help="摘要（不超过120字）")
-    parser.add_argument("--content-html", required=True, help="正文 HTML 文件路径")
-    parser.add_argument("--cover-image", required=True, help="封面图路径（jpg/png）")
+    parser.add_argument("--title", required=False, help="文章标题")
+    parser.add_argument("--author", required=False, help="作者")
+    parser.add_argument("--digest", required=False, help="摘要（不超过120字）")
+    parser.add_argument("--content-html", required=False, help="正文 HTML 文件路径")
+    parser.add_argument("--cover-image", required=False, help="封面图路径（jpg/png）")
     parser.add_argument("--body-images-file", default="", help="正文图片映射JSON文件路径，如 img_map.json（可选）")
     parser.add_argument("--content-source-url", default="", help="原文链接（可选）")
+    parser.add_argument("--check-ip", action="store_true", help="只检查当前公网IP，不上传")
     args = parser.parse_args()
+
+    # 如果只是检查 IP
+    if args.check_ip:
+        print("=" * 50)
+        print("你的当前公网 IP 是：")
+        print(f"  {get_my_public_ip()}")
+        print("=" * 50)
+        print()
+        print("把这个 IP 加到公众号后台的 IP 白名单里：")
+        print("  设置与开发 → 基本配置 → IP 白名单")
+        return
 
     # 1. 读配置
     with open(args.config, "r", encoding="utf-8") as f:
@@ -117,7 +142,7 @@ def main():
     # 5. 上传正文图片并替换占位符
     if args.body_images_file:
         print("[4/5] 上传正文图片并替换占位符 ...")
-        with open(args.body_images_file, "r", encoding="utf-8") as f:
+        with open(args.body_images_file, "r", encoding="utf-8-sig") as f:
             img_map = json.load(f)
         for placeholder, img_path in img_map.items():
             img_resp = http_post_multipart(f"{UPLOADIMG_URL}?access_token={token}", img_path)

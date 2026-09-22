@@ -63,37 +63,51 @@
 
 ## 🚀 快速开始
 
-### 3 分钟上手
+### 傻瓜式配置（只需要做一次）
 
-```bash
-# 1. 克隆仓库
-git clone https://github.com/<your-username>/wechat-content-studio.git
-cd wechat-content-studio
+**第一步：填两个东西**
 
-# 2. 阅读创作 SOP（内容创作板块/00_内容创作SOP总览.md）
+打开 `scripts/config.json`，填入你的微信公众号信息：
 
-# 3. 按提示词模板（内容创作板块/01_创作指令包.md）开始第一篇创作
+```json
+{
+  "appid": "wx你的AppID填这里",
+  "appsecret": "你的AppSecret填这里"
+}
 ```
 
-### 接入草稿箱（可选）
+**怎么拿 AppID 和 AppSecret？**
+1. 登录 https://mp.weixin.qq.com
+2. 左下角「设置与开发」→「基本配置」
+3. 复制 AppID，点重置生成 AppSecret
 
-```bash
-# 1. 复制配置模板，填入你的公众号 AppID / AppSecret
-cp scripts/config.example.json scripts/config.json
+**第二步：配 IP 白名单**
+- 在同一个页面往下滑，找到「IP 白名单」
+- 把你当前的公网 IP 加进去
+- 不知道自己 IP？运行脚本报 40164 错误时会告诉你
 
-# 2. 编辑 config.json，填入凭证（⚠️ 不要提交到 Git）
+---
 
-# 3. 一键上传草稿
-python scripts/upload_to_draft.py \
-    --config scripts/config.json \
-    --title "文章标题" \
-    --author "作者" \
-    --digest "文章摘要" \
-    --content-html "./article.html" \
-    --cover-image "./cover.png"
-```
+### 开始用
 
-> 📌 **前置条件**：在微信公众平台「设置与开发 → 基本配置」中，把运行机器的公网 IP 加入 **IP 白名单**。详见 `scripts/README-上传脚本.md`。
+配置好之后，直接说：
+
+> 「帮我写一篇关于XX的公众号文章」
+
+剩下的都不用管，AI 会自动帮你：
+- 选题 → 写文章 → 起标题 → 生成封面 → 配图 → 排版 → 上传草稿箱
+
+---
+
+### 你只需要说人话
+
+| 你说的 | 我会做的 |
+|---|---|
+| 「写一篇关于豆包工作的教程」 | 自动完成全流程，上传草稿箱 |
+| 「换个标题」 | 给你5个新标题选 |
+| 「换成商务风排版」 | 自动换模板 |
+| 「出5张封面我选一张」 | 生成5张封面供你选 |
+| 「改第3段」 | 帮你精修那一段 |
 
 ---
 
