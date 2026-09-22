@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeChat Content Studio · 傻瓜式使用指南</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        .content {
+            padding: 40px;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        .section h2 {
+            font-size: 22px;
+            color: #333;
+            margin-bottom: 20px;
+            padding-left: 15px;
+            border-left: 4px solid #667eea;
+        }
+        .step {
+            background: #f8f9ff;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        .step-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .step h3 {
+            display: inline;
+            font-size: 17px;
+            color: #333;
+        }
+        .step p {
+            margin-top: 10px;
+            color: #666;
+            font-size: 15px;
+        }
+        .code-block {
+            background: #1e1e2e;
+            color: #a6e3a1;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+        .tip {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 0 8px 8px 0;
+            margin: 15px 0;
+        }
+        .tip-title {
+            font-weight: bold;
+            color: #856404;
+            margin-bottom: 5px;
+        }
+        .warning {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 15px;
+            border-radius: 0 8px 8px 0;
+            margin: 15px 0;
+        }
+        .warning-title {
+            font-weight: bold;
+            color: #721c24;
+            margin-bottom: 5px;
+        }
+        .faq-item {
+            border-bottom: 1px solid #eee;
+            padding: 15px 0;
+        }
+        .faq-question {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        .faq-answer {
+            color: #666;
+            font-size: 15px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #999;
+            font-size: 14px;
+            border-top: 1px solid #eee;
+        }
+        .checklist {
+            list-style: none;
+        }
+        .checklist li {
+            padding: 8px 0;
+            color: #555;
+        }
+        .checklist li:before {
+            content: "✅ ";
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 WeChat Content Studio</h1>
+            <p>公众号内容创作全流程 · 傻瓜式使用指南</p>
+        </div>
+        <div class="content">
+            
+            <div class="section">
+                <h2>这是什么？</h2>
+                <p style="color:#666;margin-bottom:15px;">
+                    这是一个帮你自动写公众号的工具。你只需要说一句话，它就能帮你：
+                </p>
+                <ul class="checklist">
+                    <li>写文章初稿</li>
+                    <li>生成标题候选</li>
+                    <li>生成封面图和配图</li>
+                    <li>自动排版</li>
+                    <li>上传到公众号草稿箱</li>
+                </ul>
+                <p style="color:#666;margin-top:15px;">
+                    <strong>注意：</strong>只上传草稿箱，绝不自动发布，发布永远你自己点。
+                </p>
+            </div>
+
+            <div class="section">
+                <h2>准备工作（一次性）</h2>
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <h3>准备好你的公众号凭证</h3>
+                    <p>
+                        登录 <a href="https://mp.weixin.qq.com" target="_blank">微信公众平台</a>，然后：
+                    </p>
+                    <p>
+                        左下角「设置与开发」→「基本配置」，找到：<br>
+                        • <strong>AppID</strong>（wx开头的一串）<br>
+                        • <strong>AppSecret</strong>（点「重置」生成）
+                    </p>
+                </div>
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <h3>把你的IP加到白名单</h3>
+                    <p>
+                        在同一个页面，找到「IP白名单」，点「修改」，把你的公网IP加进去。
+                    </p>
+                    <div class="tip">
+                        <div class="tip-title">💡 怎么查我的IP？</div>
+                        运行这个命令就能看到：<br>
+                        <div class="code-block">python upload_to_draft.py --config config.json --check-ip</div>
+                    </div>
+                </div>
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <h3>填配置文件</h3>
+                    <p>
+                        打开 <code>scripts/config.json</code>，把你的AppID和AppSecret填进去：
+                    </p>
+                    <div class="code-block">
+{<br>
+&nbsp;&nbsp;"appid": "你的AppID",<br>
+&nbsp;&nbsp;"appsecret": "你的AppSecret"<br>
+}
+                    </div>
+                    <div class="warning">
+                        <div class="warning-title">⚠️ 注意</div>
+                        config.json 包含你的密钥，<strong>不要提交到Git</strong>，也不要发给别人。
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>三步上手（每次用）</h2>
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <h3>跟豆包说一句话</h3>
+                    <p>
+                        打开豆包，跟它说：<br>
+                        <strong>"帮我写一篇关于XX的公众号文章，上传到草稿箱"</strong>
+                    </p>
+                    <p>
+                        比如：<br>
+                        "帮我写一篇关于怎么用AI做会议纪要的公众号文章，上传到草稿箱"
+                    </p>
+                </div>
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <h3>等它做完</h3>
+                    <p>
+                        豆包会自动帮你：<br>
+                        • 写文章<br>
+                        • 生成标题候选（你选一个）<br>
+                        • 生成封面和配图<br>
+                        • 排版<br>
+                        • 上传到草稿箱
+                    </p>
+                </div>
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <h3>去公众号后台检查</h3>
+                    <p>
+                        登录微信公众平台 → 草稿箱，看看排版对不对，预览一下，没问题就手动点发布。
+                    </p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>常见问题</h2>
+                <div class="faq-item">
+                    <div class="faq-question">Q：报错"IP不在白名单"怎么办？</div>
+                    <div class="faq-answer">
+                        运行 <code>python upload_to_draft.py --config config.json --check-ip</code> 看你的IP，然后把这个IP加到公众号后台的白名单里。
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Q：报错"AppSecret错误"怎么办？</div>
+                    <div class="faq-answer">
+                        去公众号后台「基本配置」里重新生成一个AppSecret，然后填到config.json里。
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Q：排版不好看怎么办？</div>
+                    <div class="faq-answer">
+                        跟豆包说"换一个排版风格"，它会帮你换另一套模板。一共有8套不同风格的模板。
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Q：文章内容不满意怎么办？</div>
+                    <div class="faq-answer">
+                        直接跟豆包说"把第三段改得口语化一点"、"标题再劲爆一点"，它会帮你改。
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Q：图片有乱码怎么办？</div>
+                    <div class="faq-answer">
+                        跟豆包说"图片有乱码，重新生成一张"，它会重新生成。这个问题已经在底层修复了，一般不会出现。
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>注意事项</h2>
+                <div class="warning">
+                    <div class="warning-title">⚠️ 重要提醒</div>
+                    <ul style="margin-left:20px;color:#721c24;">
+                        <li><strong>只上传草稿，绝不自动发布</strong>——发布动作永远你自己点</li>
+                        <li>发布前一定要预览一遍，看看排版对不对</li>
+                        <li>检查人名、数字、时间节点有没有错</li>
+                        <li>config.json 不要发给别人，不要提交到Git</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <div class="footer">
+            WeChat Content Studio · 让写公众号变成一件轻松的事
+        </div>
+    </div>
+</body>
+</html>
