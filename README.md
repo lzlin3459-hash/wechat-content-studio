@@ -191,3 +191,9 @@ wechat-content-studio/
 **如果这套流水线对你有帮助，欢迎点个 ⭐ Star 支持一下**
 
 </div>
+
+
+## 创作者主页
+
+维护者的爱发电主页：[听海](https://afdian.com/a/tinghaitools)。
+
